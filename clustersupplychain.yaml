@@ -1,0 +1,58 @@
+apiVersion: carto.run/v1alpha1
+kind: ClusterSupplyChain
+metadata:
+  name: source-to-url-dotnet
+spec:
+  resources:
+  - name: source-provider
+    params:
+    - name: serviceAccount
+      value: default
+    templateRef:
+      kind: ClusterSourceTemplate
+      name: source-template
+  - name: image-builder
+    params:
+    - name: serviceAccount
+      value: default
+    - name: clusterBuilder
+      value: default
+    - name: registry
+      value:
+        repository: pa-fbush/tanzu/tap/supply-chain
+        server: us-central1-docker.pkg.dev
+    sources:
+    - name: source
+      resource: source-provider
+    templateRef:
+      kind: ClusterImageTemplate
+      name: kpack-template-dotnet
+  - images:
+    - name: image
+      resource: image-builder
+    name: config-provider
+    params:
+    - name: serviceAccount
+      value: default
+    templateRef:
+      kind: ClusterConfigTemplate
+      name: convention-template
+  - configs:
+    - name: config
+      resource: config-provider
+    name: app-deploy
+    params:
+    - name: serviceAccount
+      value: default
+    templateRef:
+      kind: ClusterTemplate
+      name: deploy-template
+  - configs:
+    - name: config
+      resource: config-provider
+    name: app-config
+    templateRef:
+      kind: ClusterTemplate
+      name: config-template
+  selector:
+    apps.tanzu.vmware.com/workload-type: web-dotnet

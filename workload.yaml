@@ -1,0 +1,16 @@
+apiVersion: carto.run/v1alpha1
+kind: Workload
+metadata:
+  labels:
+    apps.tanzu.vmware.com/workload-type: web-dotnet
+  name: dotnet-accelerator
+  namespace: default
+spec:
+  params:
+  - name: project-path
+    value: src/Tanzu.WebDemo
+  source:
+    git:
+      ref:
+        branch: main
+      url: https://github.com/fjb4/tap-web-demo
