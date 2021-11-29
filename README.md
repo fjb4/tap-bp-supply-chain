@@ -15,5 +15,5 @@ Create a workload that uses the supply chain (requires the [tanzu CLI](https://d
 
 Note that using the supply chain requires you to specify a workload type of "web-bp". Any workload parameters that begin with "BP_" will be include in the kpack image YAML.
 
-The example above shows how to pass the [BP_PROJECT_PATH](https://paketo.io/docs/howto/dotnet-core/#using-bp_dotnet_project_path) parameter to the .NET buildpack. This is necessary when building a .NET application where the project file is not in the root folder.
+The example above shows how to pass the [BP_DOTNET_PROJECT_PATH](https://paketo.io/docs/howto/dotnet-core/#using-bp_dotnet_project_path) parameter to the .NET buildpack. This is necessary when building a .NET application where the project file is not in the root folder.
 
