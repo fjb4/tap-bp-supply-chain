@@ -1,7 +1,7 @@
 apiVersion: carto.run/v1alpha1
 kind: ClusterSupplyChain
 metadata:
-  name: source-to-url-dotnet
+  name: source-to-url-bp
 spec:
   resources:
   - name: source-provider
@@ -26,7 +26,7 @@ spec:
       resource: source-provider
     templateRef:
       kind: ClusterImageTemplate
-      name: kpack-template-dotnet
+      name: kpack-template-bp
   - images:
     - name: image
       resource: image-builder
@@ -55,4 +55,4 @@ spec:
       kind: ClusterTemplate
       name: config-template
   selector:
-    apps.tanzu.vmware.com/workload-type: web-dotnet
+    apps.tanzu.vmware.com/workload-type: web-bp

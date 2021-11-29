@@ -2,12 +2,12 @@ apiVersion: carto.run/v1alpha1
 kind: Workload
 metadata:
   labels:
-    apps.tanzu.vmware.com/workload-type: web-dotnet
+    apps.tanzu.vmware.com/workload-type: web-bp
   name: dotnet-accelerator
   namespace: default
 spec:
   params:
-  - name: project-path
+  - name: BP_DOTNET_PROJECT_PATH
     value: src/Tanzu.WebDemo
   source:
     git:

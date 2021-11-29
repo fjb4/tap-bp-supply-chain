@@ -1,7 +1,7 @@
 apiVersion: carto.run/v1alpha1
 kind: ClusterImageTemplate
 metadata:
-  name: kpack-template-dotnet
+  name: kpack-template-bp
 spec:
   imagePath: .status.latestImage
   params:
@@ -23,6 +23,18 @@ spec:
     #@       return p.value
     #@     end
     #@   end
+    #@ end
+
+    #@ def get_buildpack_params():
+    #@   bp_params = []
+    #@   if hasattr(data.values.workload.spec, "params"):
+    #@     for p in data.values.workload.spec.params:
+    #@       if p.name.startswith("BP_"):
+    #@         bp_params.append(p);
+    #@       end
+    #@     end
+    #@   end
+    #@   return bp_params
     #@ end
 
     apiVersion: kpack.io/v1alpha1
@@ -48,9 +60,10 @@ spec:
         env:
         - name: BP_OCI_SOURCE
           value: #@ data.values.source.revision
-        #@ if/end workload_param("project-path"):
-        - name: BP_DOTNET_PROJECT_PATH
-          value: #@ workload_param("project-path")
         #@ if/end workload_param("live-update"):
         - name: BP_LIVE_RELOAD_ENABLED
           value: 'true'
+      #@ for bp_param in get_buildpack_params():
+        - name: #@ bp_param.name
+          value: #@ bp_param.value
+      #@ end
